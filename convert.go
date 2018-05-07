@@ -9,7 +9,7 @@ type Converter interface {
 	Interface() (interface{}, error)
 }
 
-func Conv(s string, kind reflect.Kind) (interface{}, error) {
+func Parse(s string, kind reflect.Kind) (interface{}, error) {
 	switch kind {
 	case reflect.Bool:
 		return strconv.ParseBool(s)

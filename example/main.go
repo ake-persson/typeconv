@@ -9,14 +9,14 @@ import (
 )
 
 func main() {
-	i, err := cnv.Conv("123", reflect.Int8)
+	i, err := cnv.Parse("123", reflect.Int8)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Printf("int8: %v\n", i)
 
-	b, err := cnv.Conv("true", reflect.Bool)
+	b, err := cnv.Parse("true", reflect.Bool)
 	if err != nil {
 		log.Fatal(err)
 	}
