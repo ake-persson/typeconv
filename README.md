@@ -4,7 +4,7 @@
 
 # cnv
 
-Provides conversion from a string to specific Go type Edit
+Provides conversion from a string to specific Go type
 
 ## Example
 
