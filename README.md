@@ -59,4 +59,5 @@ func main() {
                 log.Fatal(err)
         }
         fmt.Printf("First: %s Middle: %s Last: %s\n", p.FirstName, p.MiddleName, p.LastName)
+}
 ```

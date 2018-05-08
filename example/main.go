@@ -8,12 +8,14 @@ import (
 	"github.com/mickep76/cnv"
 )
 
+// Person struct.
 type Person struct {
 	FirstName  string
 	MiddleName string
 	LastName   string
 }
 
+// Parse person string to struct.
 func (p *Person) Parse(s string) error {
 	a := strings.Split(s, " ")
 	if len(a) > 2 {
