@@ -34,7 +34,6 @@ func (p *Person) Parse(s string) error {
         } else if len(a) > 1 {
                 p.FirstName = a[0]
                 p.LastName = a[2]
-
         } else {
                 p.FirstName = a[0]
         }
