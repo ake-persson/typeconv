@@ -7,7 +7,7 @@ import (
 )
 
 type Converter interface {
-	Parse() (interface{}, error)
+	Parse(s string) error
 }
 
 func ParseBool(s string, p *bool) error {
@@ -132,17 +132,13 @@ func Parse(s string, p interface{}) error {
 		*p.(*string) = s
 		return nil
 	case reflect.Struct:
-		/*
-			if kind == "time.Time" {
-				return ParseTime(s)
-			}
-		*/
+		if v.Type().String() == "time.Time" {
+			return ParseTime(s, p.(*time.Time))
+		}
 
-		/*
-			if c, ok := s.(Converter); ok {
-				return c.Parse(s)
-			}
-		*/
+		if c, ok := p.(Converter); ok {
+			return c.Parse(s)
+		}
 	}
 
 	return ErrUnsupportedType
