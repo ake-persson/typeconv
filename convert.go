@@ -10,111 +10,127 @@ type Converter interface {
 	Parse() (interface{}, error)
 }
 
-func ParseBool(s string) (bool, error) {
-	return strconv.ParseBool(s)
+func ParseBool(s string, p *bool) error {
+	b, err := strconv.ParseBool(s)
+	*p = b
+	return err
 }
 
-func ParseInt(s string) (int, error) {
+func ParseInt(s string, p *int) error {
 	i, err := strconv.ParseInt(s, 10, 0)
-	return int(i), err
+	*p = int(i)
+	return err
 }
 
-func ParseInt8(s string) (int8, error) {
+func ParseInt8(s string, p *int8) error {
 	i, err := strconv.ParseInt(s, 10, 8)
-	return int8(i), err
+	*p = int8(i)
+	return err
 }
 
-func ParseInt16(s string) (int16, error) {
+func ParseInt16(s string, p *int16) error {
 	i, err := strconv.ParseInt(s, 10, 16)
-	return int16(i), err
+	*p = int16(i)
+	return err
 }
 
-func ParseInt32(s string) (int32, error) {
+func ParseInt32(s string, p *int32) error {
 	i, err := strconv.ParseInt(s, 10, 32)
-	return int32(i), err
+	*p = int32(i)
+	return err
 }
 
-func ParseInt64(s string) (int64, error) {
+func ParseInt64(s string, p *int64) error {
 	i, err := strconv.ParseInt(s, 10, 64)
-	return int64(i), err
+	*p = int64(i)
+	return err
 }
 
-func ParseUint(s string) (uint, error) {
+func ParseUint(s string, p *uint) error {
 	i, err := strconv.ParseUint(s, 10, 0)
-	return uint(i), err
+	*p = uint(i)
+	return err
 }
 
-func ParseUint8(s string) (uint8, error) {
+func ParseUint8(s string, p *uint8) error {
 	i, err := strconv.ParseUint(s, 10, 8)
-	return uint8(i), err
+	*p = uint8(i)
+	return err
 }
 
-func ParseUint16(s string) (uint16, error) {
+func ParseUint16(s string, p *uint16) error {
 	i, err := strconv.ParseUint(s, 10, 16)
-	return uint16(i), err
+	*p = uint16(i)
+	return err
 }
 
-func ParseUint32(s string) (uint32, error) {
+func ParseUint32(s string, p *uint32) error {
 	i, err := strconv.ParseUint(s, 10, 32)
-	return uint32(i), err
+	*p = uint32(i)
+	return err
 }
 
-func ParseUint64(s string) (uint64, error) {
+func ParseUint64(s string, p *uint64) error {
 	i, err := strconv.ParseUint(s, 10, 64)
-	return uint64(i), err
+	*p = uint64(i)
+	return err
 }
 
-func ParseFloat32(s string) (float32, error) {
-	i, err := strconv.ParseFloat(s, 32)
-	return float32(i), err
+func ParseFloat32(s string, p *float32) error {
+	f, err := strconv.ParseFloat(s, 32)
+	*p = float32(f)
+	return err
 }
 
-func ParseFloat64(s string) (float64, error) {
-	i, err := strconv.ParseFloat(s, 64)
-	return float64(i), err
+func ParseFloat64(s string, p *float64) error {
+	f, err := strconv.ParseFloat(s, 64)
+	*p = float64(f)
+	return err
 }
 
-func ParseTime(s string) (time.Time, error) {
-	return time.Parse(time.RFC3339, s)
+func ParseTime(s string, p *time.Time) error {
+	t, err := time.Parse(time.RFC3339, s)
+	*p = t
+	return err
 }
 
-// Parse with interface{} pointer?
+func Parse(s string, p interface{}) error {
+	if reflect.ValueOf(p).Kind() != reflect.Ptr {
+		return ErrNotAPointer
+	}
 
-func Parse(s string, kind reflect.Kind) (interface{}, error) {
-	switch kind {
+	v := reflect.Indirect(reflect.ValueOf(p))
+
+	switch v.Kind() {
 	case reflect.Bool:
-		return ParseBool(s)
-
+		return ParseBool(s, p.(*bool))
 	case reflect.Int:
-		return ParseInt(s)
+		return ParseInt(s, p.(*int))
 	case reflect.Int8:
-		return ParseInt8(s)
+		return ParseInt8(s, p.(*int8))
 	case reflect.Int16:
-		return ParseInt16(s)
+		return ParseInt16(s, p.(*int16))
 	case reflect.Int32:
-		return ParseInt32(s)
+		return ParseInt32(s, p.(*int32))
 	case reflect.Int64:
-		return ParseInt64(s)
-
+		return ParseInt64(s, p.(*int64))
 	case reflect.Uint:
-		return ParseInt(s)
+		return ParseUint(s, p.(*uint))
 	case reflect.Uint8:
-		return ParseInt8(s)
+		return ParseUint8(s, p.(*uint8))
 	case reflect.Uint16:
-		return ParseInt16(s)
+		return ParseUint16(s, p.(*uint16))
 	case reflect.Uint32:
-		return ParseInt32(s)
+		return ParseUint32(s, p.(*uint32))
 	case reflect.Uint64:
-		return ParseInt64(s)
-
+		return ParseUint64(s, p.(*uint64))
 	case reflect.Float32:
-		return ParseFloat32(s)
+		return ParseFloat32(s, p.(*float32))
 	case reflect.Float64:
-		return ParseFloat64(s)
-
+		return ParseFloat64(s, p.(*float64))
 	case reflect.String:
-		return s, nil
-
+		*p.(*string) = s
+		return nil
 	case reflect.Struct:
 		/*
 			if kind == "time.Time" {
@@ -129,5 +145,5 @@ func Parse(s string, kind reflect.Kind) (interface{}, error) {
 		*/
 	}
 
-	return nil, ErrKindNotSupported
+	return ErrUnsupportedType
 }

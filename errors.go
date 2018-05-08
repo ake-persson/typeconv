@@ -5,5 +5,6 @@ import (
 )
 
 var (
-	ErrKindNotSupported = errors.New("kind not supported")
+	ErrNotAPointer     = errors.New("not a pointer")
+	ErrUnsupportedType = errors.New("unsupported type")
 )
