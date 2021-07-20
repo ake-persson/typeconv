@@ -1,6 +1,6 @@
-[![GoDoc](https://godoc.org/github.com/ake-perssson/cnv?status.svg)](https://godoc.org/github.com/ake-perssson/cnv)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ake-perssson/cnv)](https://goreportcard.com/report/github.com/ake-perssson/cnv)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ake-perssson/cnv/blob/master/LICENSE)
+[![GoDoc](https://godoc.org/github.com/ake-perssson/typeconv?status.svg)](https://godoc.org/github.com/ake-perssson/typeconv)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ake-perssson/typeconv)](https://goreportcard.com/report/github.com/ake-perssson/typeconv)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ake-perssson/typeconv/blob/master/LICENSE)
 
 # cnv
 
@@ -16,7 +16,7 @@ import (
         "log"
         "strings"
 
-        "github.com/ake-perssson/cnv"
+        "github.com/ake-perssson/typecnv"
 )
 
 type Person struct {

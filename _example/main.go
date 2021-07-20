@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/ake-persson/cnv"
+	"github.com/ake-persson/typeconv"
 )
 
 // Person struct.
