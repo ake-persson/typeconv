@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/mickep76/cnv"
+	"github.com/ake-persson/cnv"
 )
 
 // Person struct.
@@ -24,7 +24,7 @@ func (p *Person) Parse(s string) error {
 		p.LastName = a[2]
 	} else if len(a) > 1 {
 		p.FirstName = a[0]
-		p.LastName = a[2]
+		p.LastName = a[1]
 	} else {
 		p.FirstName = a[0]
 	}
